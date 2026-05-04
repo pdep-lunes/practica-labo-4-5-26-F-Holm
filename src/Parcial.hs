@@ -29,8 +29,11 @@ ladrar cantidadDeLadridos unPerro = modificarEnergia (+ (cantidadDeLadridos / 2)
 regalar :: String -> Ejercicio
 regalar unJuguete unPerro = unPerro { juguetesFavoritos = unJuguete : juguetesFavoritos unPerro }
 
+esDeRaza :: Perro -> String -> Bool
+esDeRaza unPerro unaRaza = raza unPerro == unaRaza
+
 esDeRazaExtravagante :: Perro -> Bool
-esDeRazaExtravagante unPerro = raza unPerro == "dálmata" || raza unPerro == "pomerania"
+esDeRazaExtravagante unPerro = esDeRaza unPerro "dálmata" || esDeRaza unPerro "pomerania"
 
 diaDeSpa :: Ejercicio
 diaDeSpa unPerro 
