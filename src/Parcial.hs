@@ -6,7 +6,7 @@ type Ejercicio = Perro -> Perro
 data Actividad = UnaActividad {
     ejercicio :: Ejercicio,
     tiempo :: Number
-} deriving (Show, Eq)
+}
 
 data Perro = UnPerro { 
     raza :: String,
@@ -19,13 +19,13 @@ modificarEnergia :: (Number -> Number) -> Perro -> Perro
 modificarEnergia unaFuncion unPerro = unPerro { energia = max 0.unaFuncion.energia $ unPerro }
 
 jugar :: Ejercicio
-jugar unPerro = modificarEnergia (substract 10) unPerro
+jugar unPerro = modificarEnergia (subtract 10) unPerro
 
-ladrar :: Int -> Ejercicio
+ladrar :: Number -> Ejercicio
 ladrar cantidadDeLadridos unPerro = modificarEnergia (+ (cantidadDeLadridos / 2)) unPerro
 
 regalar :: String -> Ejercicio
-regalar unJuguete unPerro = unPerro { juguetesFavoritos = juguetesFavoritos : unJuguete }
+regalar unJuguete unPerro = unPerro { juguetesFavoritos = unJuguete : juguetesFavoritos unPerro }
 
 esDeRazaExtravagante :: Perro -> Bool
 esDeRazaExtravagante unPerro = raza unPerro == "dálmata" || raza unPerro == "pomerania"
@@ -36,13 +36,13 @@ diaDeSpa unPerro
   | otherwise = unPerro
 
 diaDeCampo :: Ejercicio
-diaDeCampo unPerro = unPerro { juguetesFavoritos = drop 1 juguetesFavoritos unPerro }
+diaDeCampo unPerro = unPerro { juguetesFavoritos = drop 1.juguetesFavoritos $ unPerro }
 
 puedeEstar :: Actividad -> Perro -> Bool
 puedeEstar unaActividad unPerro = tiempoDePermanencia unPerro >= tiempo unaActividad
 
 restarTiempoDePermanencia :: Actividad -> Perro -> Perro
-restarTiempoDePermanencia unaActividad unPerro = unPerro { tiempoDePermanencia = (substract tiempo unaActividad).tiempoDePermanencia $ unPerro }
+restarTiempoDePermanencia unaActividad unPerro = unPerro { tiempoDePermanencia = (subtract (tiempo unaActividad)).tiempoDePermanencia $ unPerro }
 
 realizarActividad :: Actividad -> Perro -> Perro
 realizarActividad unaActividad unPerro
