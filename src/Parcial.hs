@@ -43,16 +43,19 @@ diaDeCampo unPerro = unPerro { juguetesFavoritos = drop 1.juguetesFavoritos $ un
 puedeEstar :: Actividad -> Perro -> Bool
 puedeEstar unaActividad unPerro = tiempoDePermanencia unPerro >= tiempo unaActividad
 
-restarTiempoDePermanencia :: Actividad -> Perro -> Perro
-restarTiempoDePermanencia unaActividad unPerro = unPerro { tiempoDePermanencia = (subtract (tiempo unaActividad)).tiempoDePermanencia $ unPerro }
-
 realizarActividad :: Perro -> Actividad -> Perro
-realizarActividad unPerro unaActividad
-  | puedeEstar unaActividad unPerro = restarTiempoDePermanencia unaActividad.(ejercicio unaActividad) $ unPerro
-  | otherwise = unPerro
+realizarActividad unPerro unaActividad = ejercicio unaActividad unPerro
+
+tiempoRutina :: Rutina -> Number
+tiempoRutina unaRutina = sum.map tiempo $ unaRutina
+
+puedeHacerRutina :: Rutina -> Perro -> Bool
+puedeHacerRutina unaRutina unPerro = tiempoDePermanencia unPerro >= tiempoRutina unaRutina
 
 realizarRutina :: Rutina -> Perro -> Perro
-realizarRutina unaRutina unPerro = foldl (realizarActividad) unPerro unaRutina
+realizarRutina unaRutina unPerro
+  | puedeHacerRutina unaRutina unPerro = foldl (realizarActividad) unPerro unaRutina
+  | otherwise = unPerro
 
 perroZara :: Perro
 perroZara = UnPerro "dálmata" ["pelota", "mantita"] 90 80
