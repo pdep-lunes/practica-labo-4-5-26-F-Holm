@@ -15,6 +15,8 @@ data Perro = UnPerro {
     energia :: Number
 } deriving (Show, Eq)
 
+type Rutina = [Actividad]
+
 modificarEnergia :: (Number -> Number) -> Perro -> Perro
 modificarEnergia unaFuncion unPerro = unPerro { energia = max 0.unaFuncion.energia $ unPerro }
 
@@ -66,3 +68,6 @@ actividadSpa = UnaActividad (diaDeSpa) 120
 
 actividadCampo :: Actividad
 actividadCampo = UnaActividad (diaDeCampo) 720
+
+rutina :: Rutina
+rutina = [actividadJugar, actividadLadrar, actividadRegalar, actividadSpa, actividadCampo]
