@@ -46,13 +46,16 @@ puedeEstar unaActividad unPerro = tiempoDePermanencia unPerro >= tiempo unaActiv
 restarTiempoDePermanencia :: Actividad -> Perro -> Perro
 restarTiempoDePermanencia unaActividad unPerro = unPerro { tiempoDePermanencia = (subtract (tiempo unaActividad)).tiempoDePermanencia $ unPerro }
 
-realizarActividad :: Actividad -> Perro -> Perro
-realizarActividad unaActividad unPerro
+realizarActividad :: Perro -> Actividad -> Perro
+realizarActividad unPerro unaActividad
   | puedeEstar unaActividad unPerro = restarTiempoDePermanencia unaActividad.(ejercicio unaActividad) $ unPerro
   | otherwise = unPerro
 
+realizarRutina :: Rutina -> Perro -> Perro
+realizarRutina unaRutina unPerro = foldl (realizarActividad) unPerro unaRutina
+
 perroZara :: Perro
-perroZara = UnPerro "dálmata" ["pelota", "mantita"] 60 80
+perroZara = UnPerro "dálmata" ["pelota", "mantita"] 90 80
 
 actividadJugar :: Actividad
 actividadJugar = UnaActividad (jugar) 30
